@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import {
-  Text,
   StyleSheet,
-  View, TextInput, Image,
-  TouchableOpacity, Button,
-  ViewComponent
-} from "react-native";
+  Text,
+  View,
+  Image,
+  TextInput,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-const App = (props) => {
+
+const Login = (props) => {
   const [email, setEmail] = useState('janet.stevans@siliconrhino.io');
   const [password, setPassword] = useState('12345');
 
@@ -17,13 +20,9 @@ const App = (props) => {
       email: email,
       password: password,
     };
-    const header = {
-      'Content-Type':'application/json'
-      }
     axios
-      .post('https://api-staging.joinbubble.co.uk/auth/local', data,{headers:header})
+      .post('https://api-staging.joinbubble.co.uk/auth/local', data)
       .then((res) => {
-        console.log(res.data.token);
         AsyncStorage.setItem('token', res.data.token);
         props.navigation.navigate('Home');
       })
@@ -34,85 +33,70 @@ const App = (props) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.Image} resizeMode="contain" source={require('./assets/logo-dark-on-light.png')}
-
-      />
-
-
+      <Image resizeMode="contain" style={styles.image} source={require('./assets/logo-dark-on-light.png')} />
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.textInput}
           value={email}
-          placeholder="Enter Email"
+          placeholder="Email."
           placeholderTextColor="#003f5c"
           onChangeText={(email) => setEmail(email)}
         />
       </View>
+
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          style={styles.textInput}
           value={password}
-          placeholder="Enter Password"
-          placeholderTextColor='#003f5c'
+          placeholder="Password."
+          placeholderTextColor="#003f5c"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
         />
       </View>
-
-
-
-      <TouchableOpacity onPress={onLogin}
-        style={styles.loginBtn}>
+      <TouchableOpacity style={styles.loginBtn} onPress={onLogin}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
     </View>
-
-
   );
+};
 
-}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#846db0",
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  Image: {
-    marginBottom: 10,
-    flex:1,
-    height: '100%',
-    width:'100%',
-    position: 'absolute',
-    top:-200
+  image: {
+    marginBottom: 40,
+    height:"15%",
+    width:"80%"
   },
   inputView: {
-    backgroundColor: "white",
+    backgroundColor: '#FFC0CB',
     borderRadius: 30,
-    width: "80%",
-    borderRadius: 10,
+    width: '70%',
     height: 50,
     marginBottom: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20
+    alignItems: 'center',
   },
-  TextInput: {
+  textInput: {
     height: 50,
     flex: 1,
-    padding: 10,
-    marginLeft: 20,
-
-
   },
   loginBtn: {
-    width: "80%",
+    width: '80%',
     borderRadius: 25,
     height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 40,
-    backgroundColor: "#28b99d"
+    backgroundColor: 'blue',
+  },
+  loginText: {
+    color: '#fff',
   },
 });
-export default App;
+
+export default Login;

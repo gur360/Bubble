@@ -23,7 +23,7 @@ const Main = () => {
     <NavigationContainer>
       <Stack.Navigator headerMode="Login">
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={homeRoute} />
+       <Stack.Screen name="Home" component={homeRoute} />
       </Stack.Navigator>
     </NavigationContainer>
   );
